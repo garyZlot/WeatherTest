@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>OWMAccessToken</key>
+	<string>63dde7a2fd6a42fd6948059e24825fc8</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>weathericons-regular-webfont.ttf</string>
