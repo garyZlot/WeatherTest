@@ -26,11 +26,13 @@ struct OpenWeatherMapService: WeatherServiceProtocol {
             let country = json["city"]["country"].string
             let forecastTemperature = Temperature(country: country!,
                                                   openWeatherMapDegrees: forecastTempDegrees)
+            let forecastDayTimeString = ForecastDateTime(date: rawDateTime, timeZone: TimeZone.current).dayTime
             let forecastTimeString = ForecastDateTime(date: rawDateTime, timeZone: TimeZone.current).shortTime
             let weatherIcon = WeatherIcon(condition: forecastCondition, iconString: forecastIcon)
             let forcastIconText = weatherIcon.iconText
             
-            let forecast = Forecast(time: forecastTimeString,
+            let forecast = Forecast(day: forecastDayTimeString,
+                                    time: forecastTimeString,
                                     iconText: forcastIconText,
                                     temperature: forecastTemperature.degrees)
             

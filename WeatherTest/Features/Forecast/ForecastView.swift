@@ -10,6 +10,7 @@ import UIKit
 @IBDesignable class ForecastView: UIView {
     var view: UIView!
 
+    @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -41,19 +42,24 @@ import UIKit
     // MARK: - ViewModel
     var viewModel: ForecastViewModel? {
       didSet {
+        viewModel?.day.observe {
+            [unowned self] in
+            self.dayLabel.text = $0
+        }
+        
         viewModel?.time.observe {
-          [unowned self] in
-          self.timeLabel.text = $0
+            [unowned self] in
+            self.timeLabel.text = $0
         }
 
         viewModel?.iconText.observe {
-          [unowned self] in
-          self.iconLabel.text = $0
+            [unowned self] in
+            self.iconLabel.text = $0
         }
 
         viewModel?.temperature.observe {
-          [unowned self] in
-          self.temperatureLabel.text = $0
+            [unowned self] in
+            self.temperatureLabel.text = $0
         }
       }
     }
@@ -63,6 +69,15 @@ import UIKit
     }
 
     // MARK: - IBInspectable
+    @IBInspectable var day: String? {
+        get {
+            return dayLabel.text
+        }
+        set {
+            dayLabel.text = newValue
+        }
+    }
+    
     @IBInspectable var time: String? {
       get {
         return timeLabel.text

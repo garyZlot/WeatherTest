@@ -26,7 +26,6 @@ class WeatherViewController: UIViewController {
     
     
     @IBAction func refreshTapped(_ sender: Any) {
-        viewModel = WeatherViewModel()
         viewModel?.startLocationService()
     }
     

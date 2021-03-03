@@ -3,4 +3,5 @@ use_frameworks!
 
 target 'WeatherTest' do
     pod 'SwiftyJSON'
+    #pod 'ProtocolBuffers-Swift'
 end

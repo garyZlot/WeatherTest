@@ -8,6 +8,7 @@
 import Foundation
 
 struct Forecast {
+    let day: String
     let time: String
     let iconText: String
     let temperature: String

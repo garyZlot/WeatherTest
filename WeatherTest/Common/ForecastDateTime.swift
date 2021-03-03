@@ -16,6 +16,14 @@ struct ForecastDateTime {
         self.rawDate = date
     }
     
+    var dayTime: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = timeZone
+        dateFormatter.dateFormat = "MM/dd"
+        let date = Date(timeIntervalSince1970: rawDate)
+        return dateFormatter.string(from: date)
+    }
+    
     var shortTime: String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = timeZone
