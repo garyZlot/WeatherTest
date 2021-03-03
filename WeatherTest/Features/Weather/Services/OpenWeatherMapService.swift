@@ -12,10 +12,10 @@ import SwiftyJSON
 struct OpenWeatherMapService: WeatherServiceProtocol {
     private let urlPath = "http://api.openweathermap.org/data/2.5/forecast"
     
-    private func getFirstFourForecasts(_ json: JSON) -> [Forecast] {
+    private func getForecasts(_ json: JSON) -> [Forecast] {
         var forecasts: [Forecast] = []
         
-        for index in 0...3 {
+        for index in 0...(json["list"].count - 1) {
             guard let forecastTempDegrees = json["list"][index]["main"]["temp"].double,
                 let rawDateTime = json["list"][index]["dt"].double,
                 let forecastCondition = json["list"][index]["weather"][0]["id"].int,
@@ -91,7 +91,7 @@ struct OpenWeatherMapService: WeatherServiceProtocol {
             let weatherIcon = WeatherIcon(condition: weatherCondition, iconString: iconString)
             weatherBuilder.iconText = weatherIcon.iconText
             
-            weatherBuilder.forecasts = self.getFirstFourForecasts(json)
+            weatherBuilder.forecasts = self.getForecasts(json)
             
             completionHandler(weatherBuilder.build(), nil)
         }
@@ -112,8 +112,11 @@ struct OpenWeatherMapService: WeatherServiceProtocol {
         let latitude = String(location.coordinate.latitude)
         let longitude = String(location.coordinate.longitude)
         
-        components.queryItems = [URLQueryItem(name: "lat", value: latitude),
-                                URLQueryItem(name: "lon", value: longitude),
+//        components.queryItems = [URLQueryItem(name: "lat", value: latitude),
+//                                URLQueryItem(name: "lon", value: longitude),
+//                                URLQueryItem(name: "appid", value: appId)]
+        
+        components.queryItems = [URLQueryItem(name: "q", value: "Weifang"),
                                 URLQueryItem(name: "appid", value: appId)]
         
         return components.url

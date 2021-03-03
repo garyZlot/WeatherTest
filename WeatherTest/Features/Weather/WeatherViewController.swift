@@ -14,7 +14,8 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var iconLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet var forecastViews: [ForecastView]!
+    @IBOutlet weak var forecastsStackView: UIStackView!
+    @IBOutlet weak var forecastsViewWidthCtr: NSLayoutConstraint!
     
     let identifier = "WeatherIdentifier"
     
@@ -69,12 +70,25 @@ class WeatherViewController: UIViewController {
     private func setForcastView() {
         viewModel?.forecasts.observe {
             [unowned self] (forecastViewModels) in
-            if forecastViewModels.count >= 4 {
-                for (index, forecastView) in self.forecastViews.enumerated() {
-                    forecastView.loadViewModel(forecastViewModels[index])
+            self.clearForecastViews()
+            if forecastViewModels.count >= 0 {
+                for (_, viewModel) in forecastViewModels.enumerated() {
+                    let forecastView = ForecastView()
+                    forecastView.loadViewModel(viewModel)
+                    self.forecastsStackView.addArrangedSubview(forecastView)
                 }
+            }
+            self.forecastsViewWidthCtr.constant = CGFloat(forecastViewModels.count * 100)
+        }
+    }
+    
+    private func clearForecastViews() {
+        let svs = self.forecastsStackView.subviews
+        if svs.count > 0 {
+            for (_, v) in svs.enumerated() {
+                v.removeFromSuperview()
             }
         }
     }
-
+    
 }
